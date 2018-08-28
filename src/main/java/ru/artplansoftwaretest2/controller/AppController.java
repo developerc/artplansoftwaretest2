@@ -9,4 +9,9 @@ public class AppController {
     public String helloPage(){
         return "index";
     }
+
+    @RequestMapping("/setaccount")
+    public String insidefeaturePage(){
+        return "setaccount";
+    }
 }

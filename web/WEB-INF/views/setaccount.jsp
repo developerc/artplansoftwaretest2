@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Index</title>
+    <title>Set account</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -12,24 +12,27 @@
 <body>
 
 <div class="container">
-    <h2>главная страница входа в приложение</h2>
-    <form>
+    <h2>Страница добавления аккаунта</h2>
+    <form >
         <div class="form-group">
-            <label for="login">Login:</label>
-            <input type="login" class="form-control" id="login" placeholder="Введите логин" name="login">
+            <label for="email">Email:</label>
+            <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
         </div>
         <div class="form-group">
             <label for="pwd">Password:</label>
             <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd">
         </div>
+        <div class="form-group">
+            <label for="pwd">Reenter password:</label>
+            <input type="password" class="form-control" id="pwd2" placeholder="Reenter password" name="pwd2">
+        </div>
         <div class="checkbox">
             <label><input type="checkbox" name="remember"> Remember me</label>
         </div>
-        <button type="submit"  class="btn btn-default">Submit</button>
-       <%-- <button type="submit" onclick="location.href='http://localhost:8080/setaccount'" >Создать Аккаунт</button>--%>
-        <a href="/setaccount" class="btn btn-default" role="button">Создать аккаунт</a>
+        <button type="submit" class="btn btn-default">Submit</button>
     </form>
 </div>
 
 </body>
 </html>
+
