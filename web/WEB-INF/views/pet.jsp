@@ -1,12 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <title>Index</title>
+    <title>your pet</title>
 </head>
 <body>
-
-Main page
-
+here are your pets
 </body>
 </html>

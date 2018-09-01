@@ -1,12 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <title>Index</title>
+    <title>success page</title>
 </head>
 <body>
-
-Main page
-
+success page
 </body>
 </html>
