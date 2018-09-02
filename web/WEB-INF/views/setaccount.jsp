@@ -15,23 +15,42 @@
     <h2>Страница добавления аккаунта</h2>
     <form >
         <div class="form-group">
-            <label for="email">Email:</label>
-            <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+            <label for="username">Login:</label>
+            <input type="username" class="form-control" id="username" placeholder="Enter username" name="username">
         </div>
         <div class="form-group">
-            <label for="pwd">Password:</label>
-            <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd">
+            <label for="password">Password:</label>
+            <input type="password" class="form-control" id="password" placeholder="Enter password" name="password">
         </div>
         <div class="form-group">
-            <label for="pwd">Reenter password:</label>
-            <input type="password" class="form-control" id="pwd2" placeholder="Reenter password" name="pwd2">
+            <label for="password2">Reenter password:</label>
+            <input type="password" class="form-control" id="password2" placeholder="Reenter password" name="password2">
         </div>
         <div class="checkbox">
             <label><input type="checkbox" name="remember"> Remember me</label>
         </div>
-        <button type="submit" class="btn btn-default">Submit</button>
+        <button type="button" onclick="AddLgnPsw()" class="btn btn-default">Submit</button>
     </form>
 </div>
+<script>
+
+    var AddLgnPsw = function () {
+        var lgn = '';
+        var pwd1 = '';
+        var pwd2 = '';
+        lgn = $("#username").val();
+        pwd1 = $("#password").val();
+        pwd2 = $("#password2").val();
+
+      console.log('AddLgnPsw, ' + 'lgn=' + lgn + ', pwd1=' + pwd1 + ', pwd2=' + pwd2);
+      if (pwd1 == pwd2){
+          console.log('validation cuccesful');
+      } else {
+          console.log('validation not cuccesful');
+      }
+    };
+
+</script>
 
 </body>
 </html>
