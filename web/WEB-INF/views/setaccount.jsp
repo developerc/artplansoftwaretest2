@@ -29,25 +29,70 @@
         <div class="checkbox">
             <label><input type="checkbox" name="remember"> Remember me</label>
         </div>
-        <button type="button" onclick="AddLgnPsw()" class="btn btn-default">Submit</button>
+        <button type="button" onclick="RegNewUser()" class="btn btn-default">Зарегистрироваться</button>
     </form>
 </div>
 <script>
+    var service = 'http://localhost:8080/';
+    var lgn = '';
+    var pwd1 = '';
+    var pwd2 = '';
 
-    var AddLgnPsw = function () {
-        var lgn = '';
-        var pwd1 = '';
-        var pwd2 = '';
+    var RegNewUser = function () {
         lgn = $("#username").val();
         pwd1 = $("#password").val();
         pwd2 = $("#password2").val();
 
       console.log('AddLgnPsw, ' + 'lgn=' + lgn + ', pwd1=' + pwd1 + ', pwd2=' + pwd2);
       if (pwd1 == pwd2){
-          console.log('validation cuccesful');
+          console.log('validation cuccesful, add new user into base');
+          AddNewUser();
+          /*var objNewUser = {
+              'login' : lgn,
+              'password' : pwd1,
+              'role_name' : 'ROLE_USER'
+          };
+          $.ajax({
+              type: 'POST',
+              url: service + "users/add",
+              contentType: 'application/json;charset=utf-8',
+              data: JSON.stringify(objNewUser),
+              dataType: 'json',
+              async: false,
+              success: function (result) {
+                  console.log('Success add new user');
+
+              },
+              error: function (jqXHR, testStatus, errorThrown) {
+                  console.log('Failed add new user');
+              }
+          });*/
       } else {
           console.log('validation not cuccesful');
       }
+    };
+
+    var AddNewUser = function () {
+        var objNewUser = {
+            'login' : lgn,
+            'password' : pwd1,
+            'role_name' : 'ROLE_USER'
+        };
+        $.ajax({
+            type: 'POST',
+            url: service + "users/add",
+            contentType: 'application/json;charset=utf-8',
+            data: JSON.stringify(objNewUser),
+            dataType: 'json',
+            async: false,
+            success: function (result) {
+                console.log('Success add new user');
+
+            },
+            error: function (jqXHR, testStatus, errorThrown) {
+                console.log('Failed add new user');
+            }
+        });
     };
 
 </script>

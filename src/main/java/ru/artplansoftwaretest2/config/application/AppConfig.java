@@ -6,6 +6,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import ru.artplansoftwaretest2.dao.UsersDao;
+import ru.artplansoftwaretest2.dao.impl.UsersDaoImpl;
+import ru.artplansoftwaretest2.entity.Users;
 
 @Configuration
 @PropertySource(value = "classpath:util.properties")
@@ -22,5 +25,10 @@ public class AppConfig {
         dataSource.setUsername(environment.getRequiredProperty("jdbc.mariadb.user"));
         dataSource.setPassword(environment.getRequiredProperty("jdbc.mariadb.password"));
         return dataSource;
+    }
+
+    @Bean
+    public UsersDao usersDao(){
+        return new UsersDaoImpl(Users.class);
     }
 }
