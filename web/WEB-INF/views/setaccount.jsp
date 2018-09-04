@@ -37,6 +37,7 @@
     var lgn = '';
     var pwd1 = '';
     var pwd2 = '';
+    var arrUsers = [];
 
     var RegNewUser = function () {
         lgn = $("#username").val();
@@ -46,7 +47,12 @@
       console.log('AddLgnPsw, ' + 'lgn=' + lgn + ', pwd1=' + pwd1 + ', pwd2=' + pwd2);
       if (pwd1 == pwd2){
           console.log('validation cuccesful, add new user into base');
-          AddNewUser();
+          GetArrUsers();
+          /*if (arrUsers.length == 0) {
+              AddNewUser();
+          } else {
+              console.log('alredy there is that login')
+          }*/
           /*var objNewUser = {
               'login' : lgn,
               'password' : pwd1,
@@ -70,6 +76,28 @@
       } else {
           console.log('validation not cuccesful');
       }
+    };
+
+    var GetArrUsers = function () {
+        $.ajax({
+            type: 'GET',
+            url: service + "users/getusersbylgn/" + lgn,
+            dataType: 'json',
+            async: false,
+            success: function (result) {
+                var stringData = JSON.stringify(result);
+                console.log(stringData);
+                arrUsers = JSON.parse(stringData);
+                if (arrUsers.length == 0) {
+                    AddNewUser();
+                } else {
+                    console.log('alredy there is that login')
+                }
+            },
+            error: function (jqXHR, testStatus, errorThrown) {
+                console.log('error getting users by login')
+            }
+        });
     };
 
     var AddNewUser = function () {

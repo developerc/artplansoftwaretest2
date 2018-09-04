@@ -40,16 +40,6 @@ public class UsersController {
         }  else {
             return userById;
         }
-        /*try {
-            userById = usersService.getUsersById(Long.parseLong(id));
-            return userById;
-        } catch (Exception e){
-            Users errUser = new Users();
-            errUser.setId(Long.parseLong(id));
-            errUser.setLogin("error");
-            errUser.setPassword("Can't get user with that ID");
-            return errUser;
-        }*/
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, produces = "application/json;charset=utf-8")
@@ -62,6 +52,12 @@ public class UsersController {
     @ResponseBody
     public Users updUsers(@RequestBody Users users){
         return usersService.updUsers(users);
+    }
+
+    @RequestMapping(value = "/getusersbylgn/{lgn}", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public List<Users> getUsersByLgn(@PathVariable(value = "lgn") String lgn){
+        return usersService.getUsersByLgn(lgn);
     }
 
 }

@@ -37,4 +37,9 @@ public class UsersServiceImpl implements UsersService{
     public Users updUsers(Users users) {
         return usersDao.update(users);
     }
+
+    @Override
+    public List<Users> getUsersByLgn(String lgn) {
+        return usersDao.getUsersByLgn(lgn);
+    }
 }

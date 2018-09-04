@@ -43,4 +43,11 @@ public interface UsersService {
      * @return updated users
      */
     Users updUsers(Users users);
+
+    /**
+     * method for receiving all users by login
+     *
+     * @return all Users by login
+     */
+    List<Users> getUsersByLgn(String lgn);
 }
