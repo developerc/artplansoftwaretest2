@@ -13,6 +13,7 @@
 
 <div class="container">
     <h2>Страница добавления аккаунта</h2>
+    <label id="errLabel"></label>
     <form >
         <div class="form-group">
             <label for="username">Login:</label>
@@ -48,31 +49,6 @@
       if (pwd1 == pwd2){
           console.log('validation cuccesful, add new user into base');
           GetArrUsers();
-          /*if (arrUsers.length == 0) {
-              AddNewUser();
-          } else {
-              console.log('alredy there is that login')
-          }*/
-          /*var objNewUser = {
-              'login' : lgn,
-              'password' : pwd1,
-              'role_name' : 'ROLE_USER'
-          };
-          $.ajax({
-              type: 'POST',
-              url: service + "users/add",
-              contentType: 'application/json;charset=utf-8',
-              data: JSON.stringify(objNewUser),
-              dataType: 'json',
-              async: false,
-              success: function (result) {
-                  console.log('Success add new user');
-
-              },
-              error: function (jqXHR, testStatus, errorThrown) {
-                  console.log('Failed add new user');
-              }
-          });*/
       } else {
           console.log('validation not cuccesful');
       }
@@ -92,6 +68,8 @@
                     AddNewUser();
                 } else {
                     console.log('alredy there is that login')
+                    $('#errLabel').text('Такой логин уже есть');
+                    $('#errLabel').css("color", "red");
                 }
             },
             error: function (jqXHR, testStatus, errorThrown) {
@@ -115,7 +93,8 @@
             async: false,
             success: function (result) {
                 console.log('Success add new user');
-
+                $('#errLabel').text('Пользователь успешно зарегистрирован!');
+                $('#errLabel').css("color", "black");
             },
             error: function (jqXHR, testStatus, errorThrown) {
                 console.log('Failed add new user');
