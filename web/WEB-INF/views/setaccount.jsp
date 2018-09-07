@@ -95,11 +95,34 @@
                 console.log('Success add new user');
                 $('#errLabel').text('Пользователь успешно зарегистрирован!');
                 $('#errLabel').css("color", "black");
+                AuthUser();
             },
             error: function (jqXHR, testStatus, errorThrown) {
                 console.log('Failed add new user');
             }
         });
+    };
+
+    var AuthUser = function () {
+        var objData = {};
+      $.ajax({
+          type: 'POST',
+          url: service + "login",
+          data: jQuery.param({ username: "user", password : "user"}) ,
+          contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+          // dataType: 'json',
+          // async: false,
+          /*type: 'POST',
+          url: service + "login",
+          username:lgn,
+          password:pwd1,*/
+          success: function (result) {
+              console.log('Login user success');
+          },
+          error: function (jqXHR, testStatus, errorThrown) {
+              console.log('Failed login user');
+          }
+      });
     };
 
 </script>
