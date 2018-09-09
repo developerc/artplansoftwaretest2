@@ -31,6 +31,7 @@
             <label><input type="checkbox" name="remember"> Remember me</label>
         </div>
         <button type="button" onclick="RegNewUser()" class="btn btn-default">Зарегистрироваться</button>
+        <button type="button" onclick="ValidLgn()" class="btn btn-default">Валидация логина</button>
     </form>
 </div>
 <script>
@@ -51,6 +52,8 @@
           GetArrUsers();
       } else {
           console.log('validation not cuccesful');
+          $('#errLabel').text('Пароль повторен не точно!');
+          $('#errLabel').css("color", "red");
       }
     };
 
@@ -94,7 +97,7 @@
             success: function (result) {
                 console.log('Success add new user');
                 $('#errLabel').text('Пользователь успешно зарегистрирован!');
-                $('#errLabel').css("color", "black");
+                $('#errLabel').css("color", "green");
                 AuthUser();
             },
             error: function (jqXHR, testStatus, errorThrown) {
@@ -104,25 +107,48 @@
     };
 
     var AuthUser = function () {
-        var objData = {};
       $.ajax({
           type: 'POST',
           url: service + "login",
-          data: jQuery.param({ username: "user", password : "user"}) ,
+          data: jQuery.param({ username: $("#username").val(), password : $("#password").val()}) ,
           contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-          // dataType: 'json',
-          // async: false,
-          /*type: 'POST',
-          url: service + "login",
-          username:lgn,
-          password:pwd1,*/
           success: function (result) {
               console.log('Login user success');
+              $('#errLabel').text('Аутентификация прошла успешно');
+              $('#errLabel').css("color", "green");
+              setTimeout('window.open(\'http://localhost:8080/pet\', \'_blank\')', 3000);
           },
           error: function (jqXHR, testStatus, errorThrown) {
               console.log('Failed login user');
           }
       });
+    };
+
+    var ValidLgn = function () {
+        console.log('ValidLgn');
+        lgn = $("#username").val();
+        $.ajax({
+            type: 'GET',
+            url: service + "users/getusersbylgn/" + lgn,
+            dataType: 'json',
+            async: false,
+            success: function (result) {
+                var stringData = JSON.stringify(result);
+                console.log(stringData);
+                arrUsers = JSON.parse(stringData);
+                if (arrUsers.length == 0) {
+                    $('#errLabel').text('Такой логин не занят');
+                    $('#errLabel').css("color", "green");
+                } else {
+                    console.log('alredy there is that login')
+                    $('#errLabel').text('Такой логин уже есть');
+                    $('#errLabel').css("color", "red");
+                }
+            },
+            error: function (jqXHR, testStatus, errorThrown) {
+                console.log('error getting users by login')
+            }
+        });
     };
 
 </script>

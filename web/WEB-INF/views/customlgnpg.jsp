@@ -13,24 +13,45 @@
 
 <div class="container">
     <h2>главная страница входа в приложение</h2>
-    <form name="f" action='/login' method='POST'>
+    <label id="errLabel"></label>
+    <form>
         <div class="form-group">
-            <label for="login">Login:</label>
-            <input type="login" class="form-control" id="login" placeholder="Введите логин" name="login">
+            <label for="username">Login:</label>
+            <input type="login" class="form-control" id="username" placeholder="Enter login" name="username">
         </div>
         <div class="form-group">
-            <label for="pwd">Password:</label>
-            <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd">
+            <label for="password">Password:</label>
+            <input type="password" class="form-control" id="password" placeholder="Enter password" name="password">
         </div>
         <div class="checkbox">
             <label><input type="checkbox" name="remember"> Remember me</label>
         </div>
-        <input name="submit" type="submit" value="Login"/>
-        <%--<button type="submit"  class="btn btn-default">Submit</button>--%>
-        <%-- <button type="submit" onclick="location.href='http://localhost:8080/setaccount'" >Создать Аккаунт</button>--%>
-        <a href="/setaccount" class="btn btn-default" role="button">Создать аккаунт</a>
+        <button type="button" onclick="AuthUser()" class="btn btn-default">Login</button>
     </form>
 </div>
+<script>
+    var service = 'http://localhost:8080/';
+    // var lgn = '';
+    // var pwd = '';
+
+    var AuthUser = function () {
+        $.ajax({
+            type: 'POST',
+            url: service + "login",
+            data: jQuery.param({ username: $("#username").val(), password : $("#password").val()}) ,
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            success: function (result) {
+                console.log('Login user success');
+                $('#errLabel').text('Проверка логина и пароля');
+                $('#errLabel').css("color", "green");
+                setTimeout('window.open(\'http://localhost:8080/pet\', \'_blank\')', 3000);
+            },
+            error: function (jqXHR, testStatus, errorThrown) {
+                console.log('Failed login user');
+            }
+        });
+    };
+</script>
 
 </body>
 </html>
