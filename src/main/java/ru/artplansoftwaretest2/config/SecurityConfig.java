@@ -20,7 +20,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .antMatchers("/pet").access("hasRole('USER')")
 //                .antMatchers("/statistika/**").access("hasRole('USER') or hasRole('ADMIN')")
-                .and().csrf().disable().formLogin()/*.failureForwardUrl("/failurepg").successForwardUrl("/successpg")*//*.loginPage("/customlgnpg")*//*.defaultSuccessUrl("/", false)*/;
+                .and().csrf().disable().formLogin().failureForwardUrl("/failurepg").successForwardUrl("/successpg")/*.loginPage("/customlgnpg")*//*.defaultSuccessUrl("/", false)*/;
     }
 
     @Override
