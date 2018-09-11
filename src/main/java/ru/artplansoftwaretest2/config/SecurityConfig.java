@@ -7,6 +7,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -20,7 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .antMatchers("/pet").access("hasRole('USER')")
 //                .antMatchers("/statistika/**").access("hasRole('USER') or hasRole('ADMIN')")
-                .and().csrf().disable().formLogin().failureForwardUrl("/failurepg").successForwardUrl("/successpg")/*.loginPage("/customlgnpg")*//*.defaultSuccessUrl("/", false)*/;
+                .and().csrf().disable().formLogin().failureForwardUrl("/failurepg").successForwardUrl("/pet")/*.loginPage("/customlgnpg")*//*.defaultSuccessUrl("/", false)*/;
     }
 
 //    @Override
@@ -31,7 +34,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService);
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+    }
+
+    private PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
 }

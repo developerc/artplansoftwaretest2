@@ -39,6 +39,7 @@
     var lgn = '';
     var pwd1 = '';
     var pwd2 = '';
+    var criptPwd = '';
     var arrUsers = [];
 
     var RegNewUser = function () {
@@ -82,6 +83,7 @@
     };
 
     var AddNewUser = function () {
+
         var objNewUser = {
             'login' : lgn,
             'password' : pwd1,

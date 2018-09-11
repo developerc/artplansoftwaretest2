@@ -1,6 +1,7 @@
 package ru.artplansoftwaretest2.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.artplansoftwaretest2.dao.UsersDao;
 import ru.artplansoftwaretest2.entity.Users;
@@ -15,7 +16,12 @@ public class UsersServiceImpl implements UsersService{
 
     @Override
     public Users addUsers(Users users) {
-        return usersDao.create(users);
+        //хешируем пароль при записи в базу
+        Users criptUser = users;
+        String psw = criptUser.getPassword();
+        String criptPsw = new BCryptPasswordEncoder().encode(psw);
+        criptUser.setPassword(criptPsw);
+        return usersDao.create(criptUser);
     }
 
     @Override
