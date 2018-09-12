@@ -14,7 +14,7 @@
 <div class="container">
     <h2>главная страница входа в приложение</h2>
     <label id="errLabel"></label>
-    <form>
+    <form <%--name='loginForm' action="<c:url value='/login'/>" method='POST'--%>>
         <div class="form-group">
             <label for="username">Login:</label>
             <input type="login" class="form-control" id="username" placeholder="Enter login" name="username">
@@ -26,7 +26,7 @@
         <div class="checkbox">
             <label><input type="checkbox" name="remember"> Remember me</label>
         </div>
-        <button type="button" onclick="AuthUser()" class="btn btn-default">Login</button>
+        <button type="button" onclick="AuthUser()" <%--type="submit"--%> class="btn btn-default">Login</button>
     </form>
 </div>
 <script>
@@ -44,7 +44,7 @@
                 console.log('Login user success');
                 $('#errLabel').text('Проверка логина и пароля');
                 $('#errLabel').css("color", "green");
-                setTimeout('window.open(\'http://localhost:8080/pet\', \'_blank\')', 3000);
+                setTimeout('window.open(\'http://localhost:8080/pet\'/*, \'_blank\'*/)', 3000);
             },
             error: function (jqXHR, testStatus, errorThrown) {
                 console.log('Failed login user');
