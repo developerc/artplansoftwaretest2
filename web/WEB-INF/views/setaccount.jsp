@@ -118,7 +118,9 @@
               console.log('Login user success');
               $('#errLabel').text('Аутентификация прошла успешно');
               $('#errLabel').css("color", "green");
-              setTimeout('window.open(\'http://localhost:8080/pet\', \'_blank\')', 3000);
+              // setTimeout('window.open(\'http://localhost:8080/pet\', \'_blank\')', 3000);
+              setTimeout( 'location="http://localhost:8080/pet";', 3000 );
+
           },
           error: function (jqXHR, testStatus, errorThrown) {
               console.log('Failed login user');
