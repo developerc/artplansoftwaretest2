@@ -9,10 +9,13 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import ru.artplansoftwaretest2.dao.AttemptsDao;
+import ru.artplansoftwaretest2.dao.PetDao;
 import ru.artplansoftwaretest2.dao.UsersDao;
 import ru.artplansoftwaretest2.dao.impl.AttemptsDaoImpl;
+import ru.artplansoftwaretest2.dao.impl.PetDaoImpl;
 import ru.artplansoftwaretest2.dao.impl.UsersDaoImpl;
 import ru.artplansoftwaretest2.entity.Attempts;
+import ru.artplansoftwaretest2.entity.Pet;
 import ru.artplansoftwaretest2.entity.Users;
 
 @Configuration
@@ -49,5 +52,10 @@ public class AppConfig {
     @Bean
     public AttemptsDao attemptsDao(){
         return new AttemptsDaoImpl(Attempts.class);
+    }
+
+    @Bean
+    public PetDao petDao(){
+        return new PetDaoImpl(Pet.class);
     }
 }

@@ -34,7 +34,7 @@ public class AuthSuccessHandler extends SavedRequestAwareAuthenticationSuccessHa
 
         date = new Date();
         timeNow = date.getTime();
-        if ((attempts.getCntAttempts() > 1) && ((timeNow - attempts.getTimeMsec()) < 120000)) {
+        if ((attempts.getCntAttempts() > 10) && ((timeNow - attempts.getTimeMsec()) < 3600000)) {
             getRedirectStrategy().sendRedirect(request, response, "/logout");
         } else {
             idAttempts = attempts.getId();
