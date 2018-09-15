@@ -43,4 +43,11 @@ public interface PetService {
      * @return updated pet
      */
     Pet updPet(Pet pet);
+
+    /**
+     * method for receiving all pets by name
+     *
+     * @return all Pet by name
+     */
+    List<Pet> getPetByName(String name);
 }

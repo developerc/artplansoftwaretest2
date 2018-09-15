@@ -44,4 +44,10 @@ public class PetController {
     public Pet updPet(@RequestBody Pet pet){
         return petService.updPet(pet);
     }
+
+    @RequestMapping(value = "/getbyname/{name}", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public List<Pet> getPetByName(@PathVariable(value = "name") String name){
+        return petService.getPetByName(name);
+    }
 }

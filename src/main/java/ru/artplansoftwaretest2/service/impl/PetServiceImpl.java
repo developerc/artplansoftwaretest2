@@ -38,4 +38,9 @@ public class PetServiceImpl implements PetService{
     public Pet updPet(Pet pet) {
         return petDao.update(pet);
     }
+
+    @Override
+    public List<Pet> getPetByName(String name) {
+        return petDao.getPetByName(name);
+    }
 }
