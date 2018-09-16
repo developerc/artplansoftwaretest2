@@ -8,6 +8,7 @@
 <body>
 <script>
     var service = 'http://localhost:8080/';
+    var arrData=[];
 
     var GetAllPets = function () {
         // var d = new Date();
@@ -168,6 +169,174 @@
             }
         });
     };
+
+    var UpdatePet = function () {
+        $.ajax({
+            type: 'GET',
+            url: service + 'pet/getbyname/' + $("#name").val(),
+            dataType: 'json',
+            async: false,
+            success: function (result) {
+                var output = '';
+                var stringData = JSON.stringify(result);
+                arrData = JSON.parse(stringData);
+                if (arrData.length == 0){
+                    $('#errLabel').text('Такого имени нет!');
+                    $('#errLabel').css("color", "red");
+                    output+= '<table class="table-row-cell" border="1">';
+                    output+= '<tr>';
+                    output+= '<th>id</'+'th>';
+                    output+= '<th>name</'+'th>';
+                    output+= '<th>gender</'+'th>';
+                    output+= '<th>birthDay</'+'th>';
+                    output+= '</' +'tr>';
+                    output+= '</' +'table>';
+                    $('#tablePet').html(output);
+                } else {
+                    console.log('id=' + arrData[0].id + ', name=' + $("#name").val() + ', gender=' + $("#gender").val() + ', birthDay=' + $("#birthDay").val());
+                   UpdPetById();
+                }
+            },
+            error: function (jqXHR, testStatus, errorThrown) {
+                $('#tablePet').html(JSON.stringify(jqXHR))
+            }
+        });
+    };
+
+    var UpdPetById = function () {
+        var genderPet = false;
+        if ($("#gender").val() == 'м'){
+            genderPet = true;
+        } else {
+            genderPet = false;
+        }
+        var JSONObject = {
+            'id':arrData[0].id,
+            'name': $("#name").val(),
+            'gender': genderPet,
+            'birthDay': $("#birthDay").val()
+        };
+        $.ajax({
+            type: 'PUT',
+            url: service + "pet/upd",
+            contentType: 'application/json;charset=utf-8',
+            data: JSON.stringify(JSONObject),
+            dataType: 'json',
+            async: false,
+            success: function (result) {
+                GetByName();
+                $('#errLabel').text('Питомец успешно обновлен');
+                $('#errLabel').css("color", "green");
+            },
+            error: function (jqXHR, testStatus, errorThrown) {
+                $('#tablePet').html(JSON.stringify(jqXHR))
+            }
+        });
+    };
+
+    var DeleteByName = function () {
+        $.ajax({
+            type: 'GET',
+            url: service + 'pet/getbyname/' + $("#name").val(),
+            dataType: 'json',
+            async: false,
+            success: function (result) {
+                var output = '';
+                var stringData = JSON.stringify(result);
+                arrData = JSON.parse(stringData);
+                if (arrData.length > 0) {
+                    DelPetById();
+                } else {
+                    GetAllPets();
+                    $('#errLabel').text('Такой питомец в списке не значится');
+                    $('#errLabel').css("color", "red");
+                }
+            },
+            error: function (jqXHR, testStatus, errorThrown) {
+                $('#tablePet').html(JSON.stringify(jqXHR))
+            }
+        });
+    };
+
+    var DelPetById = function () {
+        $.ajax({
+            type: 'DELETE',
+            url: service + 'pet/delete/' + arrData[0].id,
+            dataType: 'json',
+            async: false,
+            success: function (result) {
+                    GetAllPets();
+                    $('#errLabel').text('Питомец успешно удален');
+                    $('#errLabel').css("color", "green");
+            },
+            error: function (jqXHR, testStatus, errorThrown) {
+                $('#tablePet').html(JSON.stringify(jqXHR))
+            }
+        });
+    };
+
+    var GetPetById = function () {
+        var objData = {};
+        $.ajax({
+            type: 'GET',
+            url: service + 'pet/get/' + $("#idPet").val(),
+            dataType: 'json',
+            async: false,
+            success: function (result) {
+                var output = '';
+                var stringData = JSON.stringify(result);
+                objData = JSON.parse(stringData);
+                output+= '<table class="table-row-cell" border="1">';
+
+                output+= '<tr>';
+                output+= '<th>id</'+'th>';
+                output+= '<th>name</'+'th>';
+                output+= '<th>gender</'+'th>';
+                output+= '<th>birthDay</'+'th>';
+                output+= '</' +'tr>';
+
+                output += '<tr>';
+                output += '<th>' + objData.id + '</' + 'th>';
+                output += '<th>' + objData.name + '</' + 'th>';
+                if (objData.gender == true){
+                    output += '<th>' + 'м' + '</' + 'th>';
+                } else {
+                    output += '<th>' + 'ж' + '</' + 'th>';
+                }
+                if (objData.birthDay !== null) {
+                    var d = new Date(objData.birthDay);
+                    output += '<th>' + d.toLocaleDateString() + '</' + 'th>';
+                } else {
+                    output += '<th>' + objData.birthDay + '</' + 'th>';
+                }
+                output += '</' + 'tr>';
+
+                output+= '</' +'table>';
+                $('#tablePet').html(output);
+                $('#errLabel').text('');
+            },
+            error: function (jqXHR, testStatus, errorThrown) {
+                $('#tablePet').html(JSON.stringify(jqXHR))
+            }
+        });
+    };
+
+    var DeleteById = function () {
+        $.ajax({
+            type: 'DELETE',
+            url: service + 'pet/delete/' + $("#idPet").val(),
+            dataType: 'json',
+            async: false,
+            success: function (result) {
+                GetAllPets();
+                $('#errLabel').text('Питомец успешно удален');
+                $('#errLabel').css("color", "green");
+            },
+            error: function (jqXHR, testStatus, errorThrown) {
+                $('#tablePet').html(JSON.stringify(jqXHR))
+            }
+        });
+    };
 </script>
 <div class="panel panel-default">
     <div class="panel-heading">
@@ -192,7 +361,7 @@
         <form class="form-inline">
             <label>ID:</label>
             <input id="idPet" value="ID"/>
-            <button type="button" onclick="GetById()">Искать по ID</button>
+            <button type="button" onclick="GetPetById()">Искать по ID</button>
             <button type="button" onclick="DeleteById()">Удалить по ID</button>
         </form>
     </div>
